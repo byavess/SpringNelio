@@ -4,9 +4,12 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 
@@ -20,9 +23,10 @@ public class User implements Serializable {
     private String name;
     private String email;
     private String phone;
-
-
     private String password;
+
+   @OneToMany(mappedBy = "client") // tem que colocar o nome do mesmo atributo da assossiação conferir na classe Order
+    private List<Order> orders = new ArrayList<>();
 
 
     public User(long id, String name, String email, String phone, String password) {
@@ -33,7 +37,7 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public User() {
+    public User(Long o, String alex_green, String email, String phone, String password) {
 
     }
 
@@ -83,7 +87,9 @@ public class User implements Serializable {
     public  Object outroMetodo(){
         return phone;
     }
-
+    public List<Order> getOrder(){          //Corresponde a private List<Order> orders = new ArrayList<>();
+        return orders;
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
