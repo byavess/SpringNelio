@@ -1,12 +1,22 @@
 package com.fabricio.curso.entities;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
 import java.io.Serializable;
 import java.util.Objects;
 
+
+@Entity
+@Table(name= "tb_user")         //renomeando a tabela pra não da conflito com User que e reservada do java
 public class User implements Serializable {
 
-
-    private long id;
+    @Id         //PK primary key
+    @GeneratedValue(strategy = GenerationType.IDENTITY)//auto incremento dependendo do banco muda
+    private Long id;
     private String name;
     private String email;
     private String phone;
