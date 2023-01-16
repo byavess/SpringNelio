@@ -1,9 +1,10 @@
 package com.fabricio.curso.resources;
 
+import com.fabricio.curso.entities.Category;
 import com.fabricio.curso.entities.User;
+import com.fabricio.curso.services.CategoryService;
 import com.fabricio.curso.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,20 +14,20 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController                                      //recurso API
-@RequestMapping(value = "/users")                   //nome do recurso
-public class UserResourse {
+@RequestMapping(value = "/categories")                   //nome do recurso
+public class CategoryResourse {
 
     @Autowired                           // o UserResourse depende do UserService
-    private UserService service;                        // pra funcionar minha classe tem que ta registrada como string
+    private CategoryService service;                        // pra funcionar minha classe tem que ta registrada como string
     @GetMapping                                         //responde a requisição do HTPP end poit
-    public ResponseEntity<List<User>>findAll(){
-    List<User> list = service.findAll();
+    public ResponseEntity<List<Category>>findAll(){
+    List<Category> list = service.findAll();
         return ResponseEntity.ok().body(list);
     }
 
     @GetMapping(value =  "/{id}")
-    public ResponseEntity<User> findById(@PathVariable Long id){
-        User obj = service.findById(id);
+    public ResponseEntity<Category> findById(@PathVariable Long id){
+        Category obj = service.findById(id);
         return ResponseEntity.ok().body(obj);
     }
 

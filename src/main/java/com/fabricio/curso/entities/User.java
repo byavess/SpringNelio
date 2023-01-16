@@ -16,7 +16,7 @@ import java.util.Objects;
 @Entity
 @Table(name= "tb_user")         //renomeando a tabela pra não da conflito com User que e reservada do java
 public class User implements Serializable {
-
+    private static final long serialVersionUID = 1L;
     @Id         //PK primary key
     @GeneratedValue(strategy = GenerationType.IDENTITY)//auto incremento dependendo do banco muda
     private Long id;
@@ -28,6 +28,9 @@ public class User implements Serializable {
    @OneToMany(mappedBy = "client") // tem que colocar o nome do mesmo atributo da assossiação conferir na classe Order
     private List<Order> orders = new ArrayList<>();
 
+
+    public User() {
+    }
 
     public User(long id, String name, String email, String phone, String password) {
         this.id = id;

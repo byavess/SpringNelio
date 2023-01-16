@@ -1,9 +1,9 @@
 package com.fabricio.curso.resources;
 
 import com.fabricio.curso.entities.Order;
-import com.fabricio.curso.entities.User;
+
 import com.fabricio.curso.services.OrderService;
-import com.fabricio.curso.services.UserService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
