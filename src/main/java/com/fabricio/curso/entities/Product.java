@@ -28,7 +28,7 @@ public class Product implements Serializable {
 
    @ManyToMany
    @JoinTable(name = "tb_product_category", joinColumns = @JoinColumn(name = "proudct_id"),
-           inverseJoinColumns = @JoinColumn(name = "category_id"))
+           inverseJoinColumns = @JoinColumn(name = "category_id"))//
 
     private Set<Category> categories = new HashSet<>(); // pra garantir que não vai ter um produto com mais de uma orcorencia has e o arraylist
 
