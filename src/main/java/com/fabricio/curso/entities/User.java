@@ -1,5 +1,6 @@
 package com.fabricio.curso.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -14,7 +15,7 @@ import java.util.Objects;
 
 
 @Entity
-@Table(name= "tb_user")         //renomeando a tabela pra não da conflito com User que e reservada do java
+@Table(name = "tb_user")         //renomeando a tabela pra não da conflito com User que e reservada do java
 public class User implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id         //PK primary key
@@ -25,7 +26,8 @@ public class User implements Serializable {
     private String phone;
     private String password;
 
-   @OneToMany(mappedBy = "client") // tem que colocar o nome do mesmo atributo da assossiação conferir na classe Order
+    @JsonIgnore
+    @OneToMany(mappedBy = "client") // tem que colocar o nome do mesmo atributo da assossiação conferir na classe Order
     private List<Order> orders = new ArrayList<>();
 
 
@@ -33,6 +35,7 @@ public class User implements Serializable {
     }
 
     public User(Long id, String name, String email, String phone, String password) {
+        super();
         this.id = id;
         this.name = name;
         this.email = email;
@@ -92,17 +95,19 @@ public class User implements Serializable {
         return orders;
     }
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return id == user.id;
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        User other = (User) obj;
+        if (id == null) {
+            if (other.id != null)
+                return false;
+        } else if (!id.equals(other.id))
+            return false;
+        return true;
     }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
-
-
 }

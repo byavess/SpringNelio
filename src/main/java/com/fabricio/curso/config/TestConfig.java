@@ -3,6 +3,7 @@ package com.fabricio.curso.config;
 import com.fabricio.curso.entities.Category;
 import com.fabricio.curso.entities.Order;
 import com.fabricio.curso.entities.OrderItem;
+import com.fabricio.curso.entities.Payment;
 import com.fabricio.curso.entities.Product;
 import com.fabricio.curso.entities.User;
 import com.fabricio.curso.entities.enums.OrderStatus;
@@ -11,6 +12,8 @@ import com.fabricio.curso.repositories.OrderItemRepository;
 import com.fabricio.curso.repositories.OrderRepository;
 import com.fabricio.curso.repositories.ProductRepository;
 import com.fabricio.curso.repositories.UserRepository;
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -31,7 +34,6 @@ public class TestConfig implements CommandLineRunner {        //implements Comma
     private CategoryRepository categoryRepository;
     @Autowired
     private ProductRepository productRepository;
-
     @Autowired
     private OrderItemRepository orderItemRepository;
 
@@ -42,11 +44,11 @@ public class TestConfig implements CommandLineRunner {        //implements Comma
         Category cat2 = new Category(null, "Books");
         Category cat3 = new Category(null, "Computers");
 
-        Product p1 = new Product(null, "The Lord of the Rings", "Lorem ipsum dolor sit amet, consectetur.", 90.5, "");
-        Product p2 = new Product(null, "Smart TV", "Nulla eu imperdiet purus. Maecenas ante.", 2190.0, "");
-        Product p3 = new Product(null, "Macbook Pro", "Nam eleifend maximus tortor, at mollis.", 1250.0, "");
-        Product p4 = new Product(null, "PC Gamer", "Donec aliquet odio ac rhoncus cursus.", 1200.0, "");
-        Product p5 = new Product(null, "Rails for Dummies", "Cras fringilla convallis sem vel faucibus.", 100.99, "");
+        Product p1 = new Product(null, "The Lord of the Rings", "Lorem ipsum dolor sit amet, consectetur.", 100.5, "");
+        Product p2 = new Product(null, "Smart TV", "Nulla eu imperdiet purus. Maecenas ante.", 5190.0, "");
+        Product p3 = new Product(null, "Macbook Pro", "Nam eleifend maximus tortor, at mollis.", 3250.0, "");
+        Product p4 = new Product(null, "PC Gamer", "Donec aliquet odio ac rhoncus cursus.", 2000.0, "");
+        Product p5 = new Product(null, "Rails for Dummies", "Cras fringilla convallis sem vel faucibus.", 200.99, "");
 
         categoryRepository.saveAll(Arrays.asList(cat1, cat2,cat3));
         productRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5));
@@ -76,6 +78,13 @@ public class TestConfig implements CommandLineRunner {        //implements Comma
         OrderItem oi4 = new OrderItem(o3, p5, 2, p5.getPrice());
 
         orderItemRepository.saveAll(Arrays.asList(oi1, oi2, oi3, oi4));
+
+        Payment pay1 = new Payment(null, Instant.parse("2019-06-20T21:53:07Z"), o1);
+        o1.setPayment(pay1);// pra salvar oneToone manda salvar o pedito o jpa se encarrega pro pagamento
+        
+
+        orderRepository.save(o1);
+
     }
 
 }

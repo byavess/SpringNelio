@@ -1,13 +1,7 @@
 package com.fabricio.curso.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 
 
 import java.io.Serializable;
@@ -32,10 +26,14 @@ public class Product implements Serializable {
 
     private Set<Category> categories = new HashSet<>(); // pra garantir que não vai ter um produto com mais de uma orcorencia has e o arraylist
 
+    @OneToMany(mappedBy = "id.product")
+    private Set<OrderItem> items = new HashSet<>();
+
     public Product() {
     }
 
     public Product(Long id, String name, String description, Double price, String imgUrl) {
+        super();
         this.id = id;
         this.name = name;
         this.description = description;
@@ -87,11 +85,20 @@ public class Product implements Serializable {
         return categories;
     }
 
+    @JsonIgnore
+    public Set<Order> getOrders() {
+        Set<Order> set = new HashSet<>();
+        for (OrderItem x : items) {
+            set.add(x.getOrder());
+        }
+        return set;
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-     //   result = prime * result + ((id == null) ? 0 : id.hashCode());
+        result = prime * result + ((id == null) ? 0 : id.hashCode());
         return result;
     }
 
@@ -104,11 +111,11 @@ public class Product implements Serializable {
         if (getClass() != obj.getClass())
             return false;
         Product other = (Product) obj;
-  //      if (id == null) {
-  //   /       if (other.id != null)
+        if (id == null) {
+            if (other.id != null)
                 return false;
- //       } else if (!id.equals(other.id))
-        //    return false;
-      //  return true;
+        } else if (!id.equals(other.id))
+            return false;
+        return true;
     }
-    }
+}
